@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx playwright install && nodemon server.mjs",
-    "start": "node server.mjs"
+    "start": "npx playwright install && node server.mjs"
   },
   "dependencies": {
     "chrome-aws-lambda": "^10.1.0",
