@@ -1,23 +1,26 @@
 const express = require('express')
 
-const chromium = require('chrome-aws-lambda')
 const playwright = require('playwright-core')
 
 const router = express.Router()
 
-async function tackScreenshot() {
-  try {
-    const path = await chromium.executablePath
-    // eslint-disable-next-line no-console
-    console.log(path, 'executablePath')
+async function tackScreenshot(url) {
+  if (!url) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: 'Page URL not defined' }),
+    }
+  }
 
+  try {
     const browser = await playwright.chromium.launch()
     const page = await browser.newPage()
 
-    await page.goto('https://spacejelly.dev/')
+    await page.goto(url)
 
     const title = await page.title()
     const description = await page.$eval('meta[name="description"]', element => element.content)
+    const screenshot = await page.screenshot({ encoding: 'binary' })
 
     await browser.close()
 
@@ -28,17 +31,21 @@ async function tackScreenshot() {
         page: {
           title,
           description,
+          buffer: screenshot,
         },
       }),
     }
   }
   catch (error) {
-    console.error(error)
+    return {
+      statusCode: 200,
+      body: JSON.stringify(error),
+    }
   }
 }
 
 router.get('/site', async (req, res) => {
-  const response = await tackScreenshot()
+  const response = await tackScreenshot(req.query?.url)
   res.send(response)
 })
 

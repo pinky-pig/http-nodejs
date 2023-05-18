@@ -15,10 +15,10 @@ This example starts an [HTTP Module](https://nodejs.org/api/http.html) server.
 
 ## 💁‍♀️ How to use
 
-- Install dependencies `yarn`
-- Connect to your Railway project `railway link`
-- Start the development server `railway run yarn start`
+- 在 VsCode 中打开项目
+- 安装依赖 `pnpm i`
+- 找到 VsCode 的调试，然后点击绿色三角运行调试
+- 运行 - `pnpm start`
 
 ## 📝 Notes
 
-The server started simply returns a `Hello World` payload. The server code is located in `server.mjs`.
