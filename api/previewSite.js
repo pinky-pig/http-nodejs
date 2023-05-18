@@ -1,3 +1,4 @@
+const { Buffer } = require('node:buffer')
 const express = require('express')
 
 const playwright = require('playwright-core')
@@ -21,6 +22,7 @@ async function tackScreenshot(url) {
     const title = await page.title()
     const description = await page.$eval('meta[name="description"]', element => element.content)
     const screenshot = await page.screenshot({ encoding: 'binary' })
+    const base64String = Buffer.from(screenshot).toString('base64')
 
     await browser.close()
 
@@ -32,6 +34,7 @@ async function tackScreenshot(url) {
           title,
           description,
           buffer: screenshot,
+          base64String: `data:image/previewSite.jpeg;base64,${base64String}`,
         },
       }),
     }
