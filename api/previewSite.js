@@ -19,8 +19,7 @@ async function tackScreenshot(url) {
 
     await page.goto(url)
 
-    const title = await page.title()
-    const description = await page.$eval('meta[name="description"]', element => element.content)
+    const title = await page?.title()
     const screenshot = await page.screenshot({ encoding: 'binary' })
     const base64String = Buffer.from(screenshot).toString('base64')
 
@@ -32,7 +31,6 @@ async function tackScreenshot(url) {
         status: 'Ok',
         page: {
           title,
-          description,
           buffer: screenshot,
           base64String: `data:image/previewSite.jpeg;base64,${base64String}`,
         },
