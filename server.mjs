@@ -6,7 +6,6 @@ const app = express()
 // axios接口数据。axios数据请求方式x-www-form-urlencoded
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use('/preview', PreviewRoute)
 
 app.all('*', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
@@ -17,6 +16,8 @@ app.all('*', (req, res, next) => {
   else
     next()
 })
+
+app.use('/preview', PreviewRoute)
 
 app.listen(process.env.PORT || 3200, (req, res) => {
   // eslint-disable-next-line no-console
