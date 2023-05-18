@@ -1,18 +1,19 @@
 const express = require('express')
-const router = express.Router()
 
-const chromium = require('chrome-aws-lambda');
-const playwright = require('playwright-core');
+const chromium = require('chrome-aws-lambda')
+const playwright = require('playwright-core')
+
+const router = express.Router()
 
 async function tackScreenshot() {
   try {
-    const browser = await playwright.chromium.launch({
-      args: chromium.args,
-      executablePath: await chromium.executablePath || "C:/Program Files/Google/Chrome/Application/chrome.exe",
-      headless: true, //设置为true，即无头模式
-    });
-    const page = await browser.newPage();
-    
+    const path = await chromium.executablePath
+    // eslint-disable-next-line no-console
+    console.log(path, 'executablePath')
+
+    const browser = await playwright.chromium.launch()
+    const page = await browser.newPage()
+
     await page.goto('https://spacejelly.dev/')
 
     const title = await page.title()
@@ -30,12 +31,13 @@ async function tackScreenshot() {
         },
       }),
     }
-  } catch (error) {
-    console.error(error);
+  }
+  catch (error) {
+    console.error(error)
   }
 }
 
-router.get('/site', async function (req, res) {
+router.get('/site', async (req, res) => {
   const response = await tackScreenshot()
   res.send(response)
 })
