@@ -5,6 +5,7 @@
   "author": "Aiden Bai",
   "license": "MIT",
   "scripts": {
+    "dev": "nodemon server.mjs",
     "start": "node server.mjs"
   },
   "dependencies": {
