@@ -1,5 +1,13 @@
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import express from 'express'
+import dotenv from 'dotenv'
 import PreviewRoute from './api/previewSite.js'
+
+dotenv.config()
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = express()
 
@@ -17,9 +25,10 @@ app.all('*', (req, res, next) => {
     next()
 })
 
+app.use('/static', express.static(path.join(__dirname, '/static/')))
 app.use('/preview', PreviewRoute)
 
-app.listen(process.env.PORT || 3200, (req, res) => {
+app.listen(process.env.PORT, (req, res) => {
   // eslint-disable-next-line no-console
-  console.log('express start port 3200')
+  console.log(`express start port ${process.env.PORT}`)
 })

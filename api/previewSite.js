@@ -1,6 +1,4 @@
-const { Buffer } = require('node:buffer')
 const express = require('express')
-
 const playwright = require('playwright-core')
 
 const router = express.Router()
@@ -17,13 +15,26 @@ async function tackScreenshot(url) {
     const browser = await playwright.chromium.launch()
     const page = await browser.newPage()
 
-    await page.goto(url)
+    await page.goto(url, {
+      timeout: 5000,
+      waitUntil: 'domcontentloaded',
+    })
 
     const title = await page?.title()
-    const screenshot = await page.screenshot({ encoding: 'binary' })
-    const base64String = Buffer.from(screenshot).toString('base64')
+    // 直接生成二进制的图片
+    // const imageBuffer = await page.screenshot({ encoding: 'binary' })
+    // const base64String = Buffer.from(imageBuffer).toString('base64')
+
+    await page.screenshot({
+      path: 'static/screenshots/previewSite.jpeg',
+      quality: 50, // 并将质量设置为 50%，只适用于 jpeg 格式
+    })
 
     await browser.close()
+
+    // 将二进制转成 Base64
+    // const imageBuffer = fs.readFileSync('static/screenshots/previewSite.jpeg')
+    // const base64String = Buffer.from(imageBuffer).toString('base64')
 
     return {
       statusCode: 200,
@@ -31,8 +42,7 @@ async function tackScreenshot(url) {
         status: 'Ok',
         page: {
           title,
-          buffer: screenshot,
-          base64String: `data:image/previewSite.jpeg;base64,${base64String}`,
+          path: `${process.env.API_URL}static/screenshots/previewSite.jpeg`,
         },
       }),
     }
@@ -40,7 +50,12 @@ async function tackScreenshot(url) {
   catch (error) {
     return {
       statusCode: 200,
-      body: JSON.stringify(error),
+      body: JSON.stringify({
+        status: error,
+        page: {
+          path: `${process.env.API_URL}static/screenshot/previewSite.jpeg`,
+        },
+      }),
     }
   }
 }
