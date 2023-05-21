@@ -3,13 +3,6 @@
   "github": {
     "silent": true
   },
-  "builds": [
-    {
-      "src": "server.mjs",
-      "use": "@vercel/node",
-      "command": "npm run build"
-    }
-  ],
   "routes": [
     { "src": "/(.*)", "dest": "/server.mjs" }
   ]
