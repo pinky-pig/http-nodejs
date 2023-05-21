@@ -1,6 +1,5 @@
 const express = require('express')
 const playwright = require('playwright-core')
-const chrome = require('chrome-aws-lambda')
 
 const router = express.Router()
 
