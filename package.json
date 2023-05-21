@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env API_URL=http://localhost:3200/ nodemon server.mjs",
-    "build": "npx playwright install && cross-env API_URL=https://dev.mmeme.me/ && vercel build",
+    "build": "npx playwright install && cross-env API_URL=https://dev.mmeme.me/ node server.mjs",
     "start": "npx playwright install && cross-env API_URL=https://dev.mmeme.me/ node server.mjs"
   },
   "dependencies": {
