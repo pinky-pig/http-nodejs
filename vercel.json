@@ -1,7 +1,15 @@
 {
   "version": 2,
   "builds": [
-    { "src": "server.mjs", "use": "@vercel/node" }
+    {
+      "src": "server.mjs",
+      "use": "@vercel/node",
+      "silent": true,
+      "env": {
+        "API_URL": "https://dev.mmeme.me/"
+      },
+      "command": "npm run build"
+    }
   ],
   "routes": [
     { "src": "/(.*)", "dest": "/server.mjs" }
