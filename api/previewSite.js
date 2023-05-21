@@ -53,7 +53,7 @@ async function tackScreenshot(url) {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        status: error,
+        status: JSON.stringify(error),
         page: {
           path: `${process.env.API_URL}static/screenshot/previewSite.jpeg`,
         },

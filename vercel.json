@@ -1,10 +1,12 @@
 {
   "version": 2,
+  "github": {
+    "silent": true
+  },
   "builds": [
     {
       "src": "server.mjs",
       "use": "@vercel/node",
-      "silent": true,
       "env": {
         "API_URL": "https://dev.mmeme.me/"
       },
