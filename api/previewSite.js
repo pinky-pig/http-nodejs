@@ -1,5 +1,6 @@
 const express = require('express')
 const playwright = require('playwright-core')
+const chrome = require('chrome-aws-lambda')
 
 const router = express.Router()
 
@@ -12,6 +13,7 @@ async function tackScreenshot(url) {
   }
 
   try {
+    const executablePath = await chrome.executablePath
     const browser = await playwright.chromium.launch()
     const page = await browser.newPage()
 
