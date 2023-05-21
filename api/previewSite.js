@@ -13,7 +13,6 @@ async function tackScreenshot(url) {
   }
 
   try {
-    const executablePath = await chrome.executablePath
     const browser = await playwright.chromium.launch()
     const page = await browser.newPage()
 
@@ -53,7 +52,7 @@ async function tackScreenshot(url) {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        status: JSON.stringify(error),
+        status: error.toString(),
         page: {
           path: `${process.env.API_URL}static/screenshot/previewSite.jpeg`,
         },
