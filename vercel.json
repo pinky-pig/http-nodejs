@@ -6,11 +6,7 @@
   "builds": [
     {
       "src": "server.mjs",
-      "use": "@vercel/node",
-      "env": {
-        "API_URL": "https://dev.mmeme.me/"
-      },
-      "command": "npm run build"
+      "use": "@vercel/node"
     }
   ],
   "routes": [
